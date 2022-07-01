@@ -1,0 +1,4 @@
+"0","bd_frec<-unique(data.frame(bd_sum$mesa,bd_sum$n_mesas))"
+"0","ggplot(data=bd_frec, aes(x=bd_sum.mesa, y=bd_sum.n_mesas)) +"
+"0","  geom_bar(stat=""identity"", color=""grey"",width=0.5)+xlab(""mesa"")+ylab('total')+ggtitle(""Total de mesas para la muestra de puestos"")+"
+"0","  theme_minimal()"

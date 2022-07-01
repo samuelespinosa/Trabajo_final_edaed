@@ -1,0 +1,3 @@
+"0","ggplot(bd_cand, aes(x=mesa, y=vot_sum,color=candidato)) +ylab('Suma de votos')+ ggtitle('Medellín elecciones 2022') + geom_point()+ geom_smooth(method=lm, se=FALSE, fullrange=FALSE)"
+"2","`geom_smooth()` using formula 'y ~ x'
+"

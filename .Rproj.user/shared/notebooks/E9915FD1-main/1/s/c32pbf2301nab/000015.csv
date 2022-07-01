@@ -1,0 +1,1 @@
+"0","ggplot(bd_cand, aes(x=mesa, y=vot_sum,color=candidato)) +ylab('suma de votos')+ ggtitle('Medellín elecciones 2022') + geom_point()"

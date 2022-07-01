@@ -1,0 +1,3 @@
+"0","bd_tot <-  bd %>%"
+"0","  group_by(mesa) %>%"
+"0","  summarise(promedio=mean(vot))"

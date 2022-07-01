@@ -1,0 +1,4 @@
+"0"," ggplot(data=bd_tot, aes(x=mesa, y=promedio)) +"
+"0","  geom_bar(stat=""identity"", color=""grey"",width=0.5)+ylab('promedio')+"
+"0","  ggtitle(""Promedio votos de mesas"")+"
+"0","  theme_minimal()"

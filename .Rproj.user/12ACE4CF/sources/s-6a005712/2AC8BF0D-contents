@@ -1,0 +1,114 @@
+---
+title: "Trabajo en \"Grupo\""
+author: "Samuel Espinosa Botero"
+date: '2022-05-30'
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+#Carga de librerias
+library(readODS)
+library(tidyverse)
+options(dplyr.summarise.inform = FALSE)
+```
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+# Lectura de indice de pobreza multidimiencional en colombia por manzana
+bd <- read_ods("bds/resultados_votacion_segunda_vuelta.ods")
+names(bd) <- c("dpto","cod_dpto","mpio","cod_mpio","zona","mesa","nom_p","num_p","candidato","vot")
+```
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+bd_sum <- bd %>%
+  group_by(mesa, candidato) %>%
+  summarise(vot_sum=sum(vot),
+            vot_mean=mean(vot),
+            n_mesas=sum(mesa/mesa))
+bd_cand <- bd_sum %>%
+  filter(candidato %in% c("Gustavo Petro","Rodolfo Hernández"))
+```
+
+## Introducción
+
+El presente es un analisis exploratorio sobre las elecciones presidenciales de 2022, en el que se pretende dar respuesta a las siguientes preguntas:
+
+1.¿Hay relación entre la distribución de las preferencias electorales con relación a la edad de los votantes?
+
+2.¿La participación es uniforme con respecto a la participación en las votaciones con respecto a la edad?
+
+Para ello se asumirá que el número de mesa es inversamente proporcial a la edad del votante.
+
+## Muestra
+
+La muestra se compone de los resultados de las mesas de votación para 15 puestos en la ciudad de medellín, por lo tanto la respuesta a las anteriores preguntas solo serán validas para la misma.
+
+
+## Suma de votos VS Mesa
+
+En la siguinete gráfica se puede apreciar cómo los votos del candidato Gustavo Petro son crecientes respecto al número de mesa, y los del candidato Roldofo heranandez son decrecientes, el candidato Roldolfo Hernandez supera con gran ventaja a su contrincante en las primeras mesas, sin embargo esta ventaja se va achicando a medida de que el numero de la mesa aumenta.
+
+Es también de resaltar que aproximadamente en la mesa 25, los votos del candidato pasan de ser crecientes por mesa, a ser decrecientes por mesa, esta particularidad se explara más adelante.
+
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+ggplot(bd_cand, aes(x=mesa, y=vot_sum,color=candidato)) +ylab('suma de votos')+ ggtitle('Medellín elecciones 2022') + geom_point()
+```
+
+## Promedio de votos VS Mesa
+
+Se obtienen resultados análogos a la suma de votos
+
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+ggplot(bd_cand, aes(x=mesa, y=vot_mean,color=candidato))+ylab('promedio votos') +
+  ggtitle('Medellín elecciones 2022')+geom_point()
+```
+
+## Frecuencia de las mesas analisadas en la mustra
+
+En la siguiente gráfica se puede notar cómo la frecuencia de las mesas tiene una distribución aproximadamente uniforme hasta la mesa 25, donde se vuelve decreciente: a mayor el número de mesa, menor es el total de mesas tomas.
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+bd_frec<-unique(data.frame(bd_sum$mesa,bd_sum$n_mesas))
+ggplot(data=bd_frec, aes(x=bd_sum.mesa, y=bd_sum.n_mesas)) +
+  geom_bar(stat="identity", color="grey",width=0.5)+xlab("mesa")+ylab('total')+ggtitle("Total de mesas para la muestra de puestos")+
+  theme_minimal()
+rm(bd_frec)
+```
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+bd_tot <-  bd %>%
+  group_by(mesa) %>%
+  summarise(promedio=mean(vot))
+```
+
+## Promedio de votos Por mesa
+
+En esta gráfica se puede observar un promedio bastante similar para todas las mesas, con unas diferencias más pronunciadas en las mesas donde se dispone de menos muestra.
+
+```{r, echo=FALSE,results='hide',fig.keep='all'}
+ ggplot(data=bd_tot, aes(x=mesa, y=promedio)) +
+  geom_bar(stat="identity", color="grey",width=0.5)+ylab('promedio')+
+  ggtitle("Promedio votos de mesas")+
+  theme_minimal()
+```
+
+## Conclusiones
+
+1. Es cierto que hay una relación ente la edad de los votantes y las preferencias de los votantes.
+
+2. Esta relación respecto a la edad del votante, para el candidato Gustavo Petro es inversamente proporcional y para el candidato Rodolfo Hernandez es directamente proporcional( se descarta el punto de inflexión en la mesa 25 debido a la distribución de mesas de la mustra )
+
+3. No hay diferencias signficativas entre la edad del votante y la participación en las elecciones ( nuevamente se descartan las diferencias más pronunciadas del promedio de votos por mesa a partir de la mesa 25 debido a las distribución de mesas de la muestra )
+
+## Recomendaciones
+
+1. Estoy en contra de los trabajos en grupo, entiendo el propósito con el que se hacen pero si la tería no funciona en la práctica no creo que se deba seguir aplicando.
+
+2. No es una recomendación pero: La especificación de los trabajos es excelente, hasta ahora sus trabajos han sido los trabajos que mejor han sido específicados y esto ayuda mucho a la hora de hacerlo.

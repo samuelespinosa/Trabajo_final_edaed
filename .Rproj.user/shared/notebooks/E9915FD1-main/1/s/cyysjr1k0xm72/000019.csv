@@ -1,0 +1,3 @@
+"0","# Lectura de indice de pobreza multidimiencional en colombia por manzana"
+"0","bd <- read_ods(""bds/resultados_votacion_segunda_vuelta.ods"")"
+"0","names(bd) <- c(""dpto"",""cod_dpto"",""mpio"",""cod_mpio"",""zona"",""mesa"",""nom_p"",""num_p"",""candidato"",""vot"")"

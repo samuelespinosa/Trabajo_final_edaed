@@ -1,0 +1,7 @@
+"0","bd_sum <- bd %>%"
+"0","  group_by(mesa, candidato) %>%"
+"0","  summarise(vot_sum=sum(vot),"
+"0","            vot_mean=mean(vot),"
+"0","            n_mesas=sum(mesa/mesa))"
+"0","bd_cand <- bd_sum %>%"
+"0","  filter(candidato %in% c(""Gustavo Petro"",""Rodolfo Hernández""))"
